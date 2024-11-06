@@ -1,4 +1,4 @@
-package team8.nugu.config.filter;
+package team8.nugu.config.jwt;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -7,6 +7,7 @@ import io.jsonwebtoken.Jwts;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 
 @Component
 public class JWTUtil {
@@ -21,9 +22,27 @@ public class JWTUtil {
 
     // 검증을 진행할 3개의 메소드
     public String getUsername(String token) {
-        return Jwts.parser().verify
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("username", String.class);
     }
 
+    public Long getId(String token) {
+        return Long.parseLong(Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("id", String.class));
+    }
+
+    // 토큰 만료 체크
+    public Boolean isExpired(String token){
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
+    }
 
     // 토큰 생성 메서드
+    public String createJwt(String username, Long id, Long expiredMs){
+        return Jwts.builder()
+                .claim("id", id)
+                .claim("username", username)
+                .issuedAt(new Date(System.currentTimeMillis())) // 현재 발행 시각
+                .expiration(new Date(System.currentTimeMillis() + expiredMs))
+                .signWith(secretKey) // 암호화
+                .compact();
+    }
+
 }
