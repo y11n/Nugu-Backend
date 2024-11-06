@@ -8,7 +8,7 @@ import org.antlr.v4.runtime.misc.NotNull;
 public class UserDTO {
 
     @NotNull // null 값으로 넘어올 경우 NullPointException
-    private String oauth_id;
+    private String username;
     @NotNull
     private String password;
     private String password2;
@@ -22,10 +22,10 @@ public class UserDTO {
     private String keyword3;
 
     @Builder
-    public UserDTO(String oauth_id, String password, String nickname,
+    public UserDTO(String username, String password, String nickname,
                    String mbti, String org, String insta_url, String intro,
                    String keyword1, String keyword2, String keyword3) {
-        this.oauth_id = oauth_id;
+        this.username = username;
         this.password = password;
         this.password2 = password;
         this.nickname = nickname;

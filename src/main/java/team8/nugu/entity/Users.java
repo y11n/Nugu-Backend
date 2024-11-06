@@ -1,21 +1,18 @@
 package team8.nugu.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Data;
-
 import java.util.UUID;
 
 @Entity
 @Data
 public class Users {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)
-    private String oauth_id;
+    private String username;
 
     private String password;
 
@@ -35,6 +32,5 @@ public class Users {
 
     @Column(columnDefinition = "BINARY(16)")
     private UUID uuid = UUID.randomUUID();
-
 
 }
