@@ -14,4 +14,7 @@ public interface TestResultRepository extends JpaRepository<TestResultEntity, Lo
 
     // 특정 사용자의 테스트 결과 조회
     List<TestResultEntity> findByUserId(Long userId);
+
+    // 특정 퀴즈의 총 참여자 수 조회
+    long countByTestId(Long testId);
 }
