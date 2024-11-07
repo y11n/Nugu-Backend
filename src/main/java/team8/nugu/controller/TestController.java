@@ -18,7 +18,7 @@ public class TestController {
     @PostMapping
     public ResponseEntity<Long> createTest(
             @RequestBody TestRequestDto request,
-            @AuthenticationPrincipal User user
+            @AuthenticationPrincipal Users user
     ) {
         Long testId = testService.createTest(request, user);
         return ResponseEntity.ok(testId);

@@ -15,7 +15,7 @@ public class TestService {
 
     // 퀴즈 생성 메서드
     @Transactional
-    public Long createTest(TestRequestDto request, User user) {
+    public Long createTest(TestRequestDto request, Users user) {
         // DTO의 유효성 검사
         if (!request.isValid()) {
             throw new IllegalArgumentException("Invalid test data");

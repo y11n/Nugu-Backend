@@ -20,7 +20,7 @@ public class TestResultController {
     @PostMapping
     public ResponseEntity<TestResultResponseDto> submitTestResult(
             @RequestBody TestResultRequestDto request,
-            @AuthenticationPrincipal User user
+            @AuthenticationPrincipal Users user
     ) {
         TestResultResponseDto response = testResultService.submitTestResult(request, user);
         return ResponseEntity.ok(response);

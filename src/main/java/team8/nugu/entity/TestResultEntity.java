@@ -21,7 +21,7 @@ public class TestResultEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private Users user;
 
     @Convert(converter = StringListConverter.class)
     @Column(name = "answer", columnDefinition = "TEXT")

@@ -22,7 +22,7 @@ public class TestResultService {
 
     // 퀴즈 결과 제출 처리 메서드
     @Transactional
-    public TestResultResponseDto submitTestResult(TestResultRequestDto request, User user) {
+    public TestResultResponseDto submitTestResult(TestResultRequestDto request, Users user) {
         // 1. 요청 데이터 유효성 검사
         if (!request.isValid()) {
             throw new IllegalArgumentException("Invalid test result data");

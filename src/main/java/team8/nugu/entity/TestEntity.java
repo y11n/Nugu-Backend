@@ -17,7 +17,7 @@ public class TestEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", unique = true)
-    private User user; // 추후에 지윤 언니의 User 클래스 import할 것
+    private Users user; // 추후에 지윤 언니의 User 클래스 import할 것
 
     // JPA 엔티티에서 String[] 배열 타입은 직접 사용할 수 없음 -> converter 사용
     @Convert(converter = StringListConverter.class)
