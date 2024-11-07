@@ -1,4 +1,7 @@
 package team8.nugu.repository;
 
-public class TestRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import team8.nugu.entity.TestEntity;
+
+public interface TestRepository extends JpaRepository<TestEntity, Long> {
 }

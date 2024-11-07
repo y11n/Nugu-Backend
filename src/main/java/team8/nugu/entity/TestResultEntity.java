@@ -3,6 +3,7 @@ package team8.nugu.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import team8.nugu.common.converter.StringListConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +23,8 @@ public class TestResultEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ElementCollection
-    @CollectionTable(
-            name = "test_result_answers",
-            joinColumns = @JoinColumn(name = "test_result_id")
-    )
-    @Column(name = "answer")
+    @Convert(converter = StringListConverter.class)
+    @Column(name = "answer", columnDefinition = "TEXT")
     private List<String> answers = new ArrayList<>();
 
     @Column(name = "nickname")
