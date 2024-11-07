@@ -2,11 +2,16 @@ package team8.nugu.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import team8.nugu.dto.NuguDTO;
 import team8.nugu.dto.UserDTO;
 import team8.nugu.entity.Users;
 import team8.nugu.repository.UserRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -48,4 +53,54 @@ public class UserService {
         return true;
     }
 
+    public NuguDTO getInfo(String username) {
+        // username으로 사용자 조회
+        Users user = userRepository.findByUsername(username);
+
+        NuguDTO nugu = new NuguDTO();
+        nugu.setNickname(user.getNickname());
+        nugu.setMbti(user.getMbti());
+        nugu.setOrg(user.getOrg());
+        nugu.setInsta_url(JsonNullable.of(user.getInsta_url()));
+        nugu.setIntro(user.getIntro());
+        nugu.setKeyword1(user.getKeyword1());
+        nugu.setKeyword2(user.getKeyword2());
+        nugu.setKeyword3(user.getKeyword3());
+
+        return nugu;
+    }
+
+    @Transactional
+    public void updateInfo(String username, NuguDTO nugu) {
+        // username으로 사용자 조회
+        Users user = userRepository.findByUsername(username);
+
+        List<NuguDTO> list = new ArrayList<>();
+        list.add(nugu);
+
+        for(int i=0; i<list.size(); i++){
+            if(list.get(i).getNickname() != null) user.setNickname(list.get(i).getNickname());
+            if(list.get(i).getMbti() != null) user.setMbti(list.get(i).getMbti());
+            if(list.get(i).getOrg() != null) user.setOrg(list.get(i).getOrg());
+
+            // 인스타 url이 존재하는데 null 값
+            if(list.get(i).getInsta_url().isPresent() && list.get(i).getInsta_url() == null) user.setInsta_url(null);
+            // 인스타 url이 존재하는데 유효한 값
+            else if(list.get(i).getInsta_url().isPresent() && list.get(i).getInsta_url() != null) user.setInsta_url(list.get(i).getInsta_url().get());
+
+            if(list.get(i).getIntro() != null) user.setIntro(list.get(i).getIntro());
+            if(list.get(i).getKeyword1() != null) user.setKeyword1(list.get(i).getKeyword1());
+            if(list.get(i).getKeyword2() != null) user.setKeyword2(list.get(i).getKeyword2());
+            if(list.get(i).getKeyword3() != null) user.setKeyword3(list.get(i).getKeyword3());
+        }
+        userRepository.save(user);
+    }
+
+    public String getUUID(String username) {
+        // username으로 사용자 조회
+        Users user = userRepository.findByUsername(username);
+
+        String uuid = user.getUuid().toString();
+        return uuid;
+    }
 }
