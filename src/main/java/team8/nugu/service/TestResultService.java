@@ -74,4 +74,34 @@ public class TestResultService {
                 .collect(Collectors.toList());
         return scores.indexOf(correctCount) + 1;
     }
+
+    // 특정 퀴즈의 모든 결과를 조회하는 메서드
+    public List<TestResultResponseDto> getTestResults(Long testId) {
+        // 해당 퀴즈의 모든 결과를 조회
+        List<TestResultEntity> results = testResultRepository.findByTestId(testId);
+
+        // 결과에 대해 DTO 반환
+        return results.stream()
+                .map(result -> {
+                    // 1. 각 결과의 점수 계산
+                    int correctCount = calculateCorrectAnswers(
+                            result.getTest().getAnswers(),
+                            result.getAnswers()
+                    );
+
+                    // 2. 해당 점수의 등수 계산
+                    int rank = calculateRank(testId, correctCount);
+
+                    // 3. 총 참여자 수 조회
+                    int totalParticipants = (int) testResultRepository.countByTestId(testId);
+
+                    // 4. DTO 생성 및 반환
+                    return TestResultResponseDto.builder()
+                            .nickname(result.getNickname())
+                            .correctAnswers(correctCount)
+                            .rank(rank)
+                            .totalParticipants(totalParticipants)
+                            .build();
+                }).collect(Collectors.toList());
+    }
 }
