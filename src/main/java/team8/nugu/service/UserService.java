@@ -62,7 +62,7 @@ public class UserService {
     }
 
     // url 접속자 누구 조회
-    public NuguDTO getInfoByOutside(String num) {
+    public NuguDTO getInfoByOutsider(String num) {
 
         // String -> UUID
         UUID uuid = UUID.fromString(num);
