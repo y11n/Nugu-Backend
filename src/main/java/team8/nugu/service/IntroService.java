@@ -31,18 +31,32 @@ public class IntroService {
         // 유저 조회
         Users user = userRepository.findByUsername(username);
 
+        createIntro(user, introDto);
+    }
+
+    @Transactional
+    public void createByOutsider(String num, IntroDTO introDto) {
+        UUID uuid = UUID.fromString(num);
+        Users user = userRepository.findByUuid(uuid);
+        if(user == null){
+            throw new NullPointerException("User not found for UUID: " + uuid);
+        }
+
+        createIntro(user, introDto);
+    }
+
+    private void createIntro(Users user, IntroDTO introDto){
         Intro intro = new Intro();
         intro.setUser(user);
         intro.setContent(introDto.getContent());
-
         List<String> list = new ArrayList<>();
         list.add(introDto.getKeyword1());
         list.add(introDto.getKeyword2());
         list.add(introDto.getKeyword3());
         intro.setKeywords(list);
         introRepository.save(intro);
-
     }
+
 
     public IntroResDTO getByUser(String username) {
         // 유저 조회
@@ -108,4 +122,5 @@ public class IntroService {
         return dto;
 
     }
+
 }
