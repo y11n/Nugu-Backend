@@ -41,4 +41,17 @@ public class IntroController {
         return ResponseEntity.status(HttpStatus.CREATED).body("The introduction has been created successfully");
     }
 
+    // 접속자의 누구 화면 GET
+    @GetMapping("/{uuid}")
+    public ResponseEntity<IntroResDTO> getIntro(@PathVariable String uuid){
+        try{
+            IntroResDTO userIntro = introService.getByOutsider(uuid);
+            return ResponseEntity.status(HttpStatus.OK).body(userIntro);
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(null);
+        }
+    }
+
 }

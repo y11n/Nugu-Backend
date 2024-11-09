@@ -12,6 +12,7 @@ import team8.nugu.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,6 +47,19 @@ public class IntroService {
     public IntroResDTO getByUser(String username) {
         // 유저 조회
         Users user = userRepository.findByUsername(username);
+
+        // 누구 소개 받아오기
+        IntroResDTO dto = findTopKeywordsAndIntros(user);
+        return dto;
+    }
+
+    public IntroResDTO getByOutsider(String num){
+        UUID uuid = UUID.fromString(num);
+
+        Users user = userRepository.findByUuid(uuid);
+        if(user == null){
+            throw new NullPointerException("User not found for UUID: " + uuid);
+        }
 
         // 누구 소개 받아오기
         IntroResDTO dto = findTopKeywordsAndIntros(user);
