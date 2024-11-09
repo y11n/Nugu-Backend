@@ -63,4 +63,17 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(uuid);
     }
 
+    @GetMapping("/{uuid}")
+    public ResponseEntity<NuguDTO> getUserByUuid(@PathVariable String uuid) {
+        try{
+            NuguDTO dto = userService.getInfoByOutside(uuid);
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(dto);
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(null);
+        }
+    }
+
 }

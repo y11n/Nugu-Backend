@@ -12,6 +12,7 @@ import team8.nugu.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -53,11 +54,31 @@ public class UserService {
         return true;
     }
 
+    // 사용자 자신의 누구 조회
     public NuguDTO getInfo(String username) {
         // username으로 사용자 조회
         Users user = userRepository.findByUsername(username);
+        return getNugu(user);
+    }
 
+    // url 접속자 누구 조회
+    public NuguDTO getInfoByOutside(String num) {
+
+        // String -> UUID
+        UUID uuid = UUID.fromString(num);
+
+        // uuid로 사용자 조회
+        Users user = userRepository.findByUuid(uuid);
+        if(user == null){
+            throw new NullPointerException("User not found for UUID: " + uuid);
+        }
+
+        return getNugu(user);
+    }
+
+    private NuguDTO getNugu(Users user){
         NuguDTO nugu = new NuguDTO();
+
         nugu.setNickname(user.getNickname());
         nugu.setMbti(user.getMbti());
         nugu.setOrg(user.getOrg());
@@ -103,4 +124,5 @@ public class UserService {
         String uuid = user.getUuid().toString();
         return uuid;
     }
+
 }
