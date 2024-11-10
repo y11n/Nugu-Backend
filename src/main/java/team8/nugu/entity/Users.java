@@ -2,6 +2,9 @@ package team8.nugu.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -33,4 +36,6 @@ public class Users {
     @Column(columnDefinition = "BINARY(16)")
     private UUID uuid = UUID.randomUUID();
 
+    @OneToMany(mappedBy = "user")
+    private List<Intro> intros = new ArrayList<>();
 }

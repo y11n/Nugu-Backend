@@ -37,5 +37,4 @@ public class UserDTO {
         this.keyword2 = keyword2;
         this.keyword3 = keyword3;
     }
-
 }

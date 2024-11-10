@@ -17,10 +17,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import team8.nugu.config.filter.JWTFilter;
 import team8.nugu.config.filter.LoginFilter;
 import team8.nugu.config.jwt.JWTUtil;
-
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-
-
 import java.util.Collections;
 
 @Configuration
@@ -98,8 +94,8 @@ public class SecurityConfig {
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-
         return http.build();
     }
 
 }
+
