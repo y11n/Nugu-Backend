@@ -71,11 +71,4 @@ public class TestController {
         Long testId = testService.createTest(request, user);
         return ResponseEntity.ok(testId);
     }
-
-    // 퀴즈 조회
-    @GetMapping("/{testId}")
-    public ResponseEntity<TestEntity> getTest(@PathVariable Long testId){
-        TestEntity test = testService.getTest(testId);
-        return ResponseEntity.ok(test);
-    }
 }
