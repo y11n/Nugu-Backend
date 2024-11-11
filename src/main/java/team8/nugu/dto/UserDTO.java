@@ -21,6 +21,8 @@ public class UserDTO {
     private String keyword2;
     private String keyword3;
 
+    public UserDTO(){}
+
     @Builder
     public UserDTO(String username, String password, String nickname,
                    String mbti, String org, String insta_url, String intro,
@@ -37,5 +39,4 @@ public class UserDTO {
         this.keyword2 = keyword2;
         this.keyword3 = keyword3;
     }
-
 }
