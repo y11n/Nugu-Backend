@@ -99,6 +99,13 @@ public class TestResultService {
                             .totalParticipants(results.size())
                             .build();
                 })
+                .sorted(Comparator.comparing(TestResultResponseDto::getCorrectAnswers).reversed())
+                .map(dto -> {
+                    dto.setRank((int) (results.stream()
+                                                .filter(r -> calculateCorrectAnswers(test.getAnswers(), r.getAnswers()) > dto.getCorrectAnswers())
+                                                .count() + 1));
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
 
