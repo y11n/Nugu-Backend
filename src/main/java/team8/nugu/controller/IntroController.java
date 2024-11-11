@@ -19,7 +19,7 @@ public class IntroController {
         this.introService = introService;
     }
 
-    // 사용자의 누구 화면 GET
+    // 사용자의 누구 소개 조회
     @GetMapping
     public ResponseEntity<IntroResDTO> getIntro(){
         // 로그인한 사용자 username 가져오기
@@ -39,6 +39,32 @@ public class IntroController {
 
         introService.createByUser(username, introDto);
         return ResponseEntity.status(HttpStatus.CREATED).body("The introduction has been created successfully");
+    }
+
+    // 접속자의 누구 소개 조회
+    @GetMapping("/{uuid}")
+    public ResponseEntity<IntroResDTO> getIntro(@PathVariable String uuid){
+        try{
+            IntroResDTO userIntro = introService.getByOutsider(uuid);
+            return ResponseEntity.status(HttpStatus.OK).body(userIntro);
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(null);
+        }
+    }
+
+    // 접속자의 누구 소개 작성
+    @PostMapping("/{uuid}")
+    public ResponseEntity<String> addIntro(@PathVariable String uuid, @RequestBody IntroDTO introDto){
+        try{
+            introService.createByOutsider(uuid, introDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body("The introduction has been created successfully");
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(null);
+        }
     }
 
 }
