@@ -10,6 +10,8 @@ import team8.nugu.entity.TestResultEntity;
 import team8.nugu.entity.Users;
 import team8.nugu.repository.TestRepository;
 import team8.nugu.repository.TestResultRepository;
+import team8.nugu.config.jwt.JWTUtil;
+import team8.nugu.repository.UserRepository;
 
 import java.util.Comparator;
 import java.util.List;
@@ -22,6 +24,8 @@ import java.util.stream.Collectors;
 public class TestResultService {
     private final TestResultRepository testResultRepository;
     private final TestRepository testRepository;
+    private final JWTUtil jwtUtil;
+    private final UserRepository userRepository;
 
     // 테스트 결과 제출 처리 메서드
     @Transactional
@@ -107,6 +111,52 @@ public class TestResultService {
                     return dto;
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<TestResultResponseDto> getTestResultsByToken(String token) {
+        // 토큰에서 username 추출
+        String username = jwtUtil.getUsername(token);
+
+        // username으로 사용자 조회
+        Users user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new IllegalArgumentException("User를 찾을 수 없습니다.");
+        }
+
+        // 사용자의 테스트 조회
+        TestEntity test = testRepository.findByUser(user);
+        if (test == null) {
+            throw new IllegalArgumentException("Test를 찾을 수 없습니다.");
+        }
+
+        // 해당 테스트의 모든 결과 조회
+        List<TestResultEntity> results = testResultRepository.findByTestId(test.getId());
+
+        // 각 결과를 DTO로 변환
+        return results.stream()
+                .map(result -> {
+                    int correctCount = calculateCorrectAnswers(
+                            test.getAnswers(),
+                            result.getAnswers()
+                    );
+                    int rank = calculateRank(test.getId(), correctCount);
+                    return TestResultResponseDto.builder()
+                            .nickname(result.getNickname())
+                            .correctAnswers(correctCount)
+                            .rank(rank)
+                            .totalParticipants(results.size())
+                            .build();
+                })
+                .sorted(Comparator.comparing(TestResultResponseDto::getCorrectAnswers).reversed())
+                .map(dto -> {
+                    dto.setRank((int) (results.stream()
+                            .filter(r -> calculateCorrectAnswers(test.getAnswers(), r.getAnswers()) > dto.getCorrectAnswers())
+                            .count() + 1));
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
     }
 
     // 정답 개수 계산 메서드
