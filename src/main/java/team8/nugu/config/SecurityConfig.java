@@ -17,7 +17,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import team8.nugu.config.filter.JWTFilter;
 import team8.nugu.config.filter.LoginFilter;
 import team8.nugu.config.jwt.JWTUtil;
-
 import java.util.Collections;
 
 @Configuration
@@ -83,8 +82,7 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/join", "/", "login", "/user/*",
-                                "/intro/*").permitAll()
+                        .requestMatchers("/join", "/", "login", "/test-results/**", "/user/*", "/intro/*").permitAll()
                         .anyRequest().authenticated());
         http
                 .addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
@@ -100,3 +98,4 @@ public class SecurityConfig {
     }
 
 }
+
