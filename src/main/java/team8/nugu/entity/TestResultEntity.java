@@ -29,4 +29,12 @@ public class TestResultEntity {
 
     @Column(name = "nickname")
     private String nickname;
+
+    // 연관관계 편의 메서드 추가- user_id란이 null일 수 없음
+    public void setUser(Users user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User cannot be null");
+        }
+        this.user = user;
+    }
 }
