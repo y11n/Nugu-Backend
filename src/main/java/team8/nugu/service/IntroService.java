@@ -9,10 +9,7 @@ import team8.nugu.entity.Users;
 import team8.nugu.repository.IntroRepository;
 import team8.nugu.repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -117,6 +114,7 @@ public class IntroService {
         // 누구 소개 목록
         List<String> intro_list = intros.stream().map(Intro::getContent)
                         .collect(Collectors.toList());
+        Collections.reverse(intro_list);
         dto.setIntro_list(intro_list);
 
         return dto;
