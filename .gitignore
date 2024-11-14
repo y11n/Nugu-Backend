@@ -42,4 +42,3 @@ application.yml
 
 ### SSL ###
 src/main/java/team8/nugu/resources/bootsecurity.p12
-src/main/resources/bootsecurity.p12

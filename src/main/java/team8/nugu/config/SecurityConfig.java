@@ -56,7 +56,7 @@ public class SecurityConfig {
 
                         CorsConfiguration configuration = new CorsConfiguration();
 
-                        configuration.setAllowedOrigins(Collections.singletonList("*"));
+                        configuration.setAllowedOrigins(Collections.singletonList("https://nugu-line4.vercel.app"));
                         configuration.setAllowedMethods(Collections.singletonList("*"));
                         configuration.setAllowCredentials(true);
                         configuration.setAllowedHeaders(Collections.singletonList("*"));
@@ -82,7 +82,7 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/join", "/", "login", "/test-results/**", "/user/*", "/intro/*").permitAll()
+                        .requestMatchers("/join", "/", "login", "/test-results/**").permitAll()
                         .anyRequest().authenticated());
         http
                 .addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
