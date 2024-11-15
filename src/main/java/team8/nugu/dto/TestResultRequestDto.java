@@ -8,7 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 public class TestResultRequestDto {
-//    private Long testId;
+    private Long id;
     private List<String> userAnswers;
     private String nickname;
 

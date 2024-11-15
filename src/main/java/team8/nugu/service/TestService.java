@@ -10,6 +10,8 @@ import team8.nugu.entity.Users;
 import team8.nugu.repository.TestRepository;
 import team8.nugu.repository.TestResultRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -58,5 +60,18 @@ public class TestService {
     public TestEntity getTest(Long testId){
         return testRepository.findById(testId)
                 .orElseThrow(() -> new IllegalArgumentException("테스트가 없습니다"));
+    }
+
+    // 퀴즈 정답 조회 메서드
+    public List<String> getTestAnswers(Users user) {
+        // 1. 사용자의 테스트 조회
+        TestEntity test = testRepository.findByUser(user);
+
+        if (test == null){
+            return null;
+        }
+
+        // 2. 테스트 정답 반환
+        return test.getAnswers();
     }
 }
