@@ -4,15 +4,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import team8.nugu.config.jwt.JWTUtil;
 import team8.nugu.dto.TestRequestDto;
 import team8.nugu.dto.TestStatusResponseDto;
-import team8.nugu.entity.TestEntity;
 import team8.nugu.entity.Users;
 import team8.nugu.repository.UserRepository;
 import team8.nugu.service.TestService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/tests") // API 명세서에 기반하여 변경할 예정!
@@ -70,5 +70,31 @@ public class TestController {
 
         Long testId = testService.createTest(request, user);
         return ResponseEntity.ok(testId);
+    }
+
+    @GetMapping("/answers")
+    public ResponseEntity<List<String>> getTestAnswers (HttpServletRequest request) {
+        // 1. Authorization 헤더에서 토큰 추출
+        String token = request.getHeader("Authorization");
+        if (token == null || token.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String accessToken = token.substring(7);
+        String username = jwtUtil.getUsername(accessToken);
+        Users user = userRepository.findByUsername(username);
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        // 2. 사용자의 테스트 정답 조회
+        List<String> answers =  testService.getTestAnswers(user);
+
+        if (answers == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        return ResponseEntity.ok(answers);
     }
 }

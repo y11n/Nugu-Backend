@@ -59,7 +59,7 @@ public class TestResultService {
             result.setTest(test);
             result.setAnswers(request.getUserAnswers());
             result.setNickname(request.getNickname());
-            testResultRepository.save(result);
+            TestResultEntity savedResult = testResultRepository.save(result);  // 저장된 엔티티 받아오기
 
             // 5. 등수 계산
             int rank = calculateRank(test.getId(), correctCount);
@@ -67,6 +67,7 @@ public class TestResultService {
 
             // 6. 응답 생성
             return TestResultResponseDto.builder()
+                    .id(savedResult.getId())
                     .nickname(request.getNickname())
                     .correctAnswers(correctCount) // 10점 만점 중 몇 점
                     .rank(rank) // 등수
@@ -97,6 +98,7 @@ public class TestResultService {
                     );
                     int rank = calculateRank(test.getId(), correctCount);
                     return TestResultResponseDto.builder()
+                            .id(result.getId())
                             .nickname(result.getNickname())
                             .correctAnswers(correctCount)
                             .rank(rank)
