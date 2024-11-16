@@ -1,5 +1,7 @@
 # 여긴 어디? 나는 누구!
 다 함께 만들어가는 트렌디한 자기소개, 누구
+
+
 ![image](https://github.com/user-attachments/assets/3fe1fe30-cb7a-45de-918f-1721f43870d1)
 
 ## 시작 가이드
