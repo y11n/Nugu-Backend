@@ -44,6 +44,17 @@ public class TestController {
         return ResponseEntity.ok(status);
     }
 
+    // 접속자 뷰에서 사용자 테스트 생성 여부 확인
+    @GetMapping("/status/{uuid}")
+    public ResponseEntity<TestStatusResponseDto> checkTestStatusByUuid(@PathVariable String uuid) {
+        try {
+            TestStatusResponseDto status = testService.checkTestStatusByUuid(uuid);
+            return ResponseEntity.ok(status);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
     // 퀴즈 생성
     @PostMapping
     public ResponseEntity<Long> createTest(
@@ -72,29 +83,20 @@ public class TestController {
         return ResponseEntity.ok(testId);
     }
 
-    @GetMapping("/answers")
-    public ResponseEntity<List<String>> getTestAnswers (HttpServletRequest request) {
-        // 1. Authorization 헤더에서 토큰 추출
-        String token = request.getHeader("Authorization");
-        if (token == null || token.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+    // UUID로 테스트 결과 조회
+    @GetMapping("/{uuid}/answers")
+    public ResponseEntity<List<String>> getTestAnswers (@PathVariable String uuid) {
+        try {
+            // UUID로 테스트 결과 조회
+            List<String> answers = testService.getTestAnswers(uuid);
 
-        String accessToken = token.substring(7);
-        String username = jwtUtil.getUsername(accessToken);
-        Users user = userRepository.findByUsername(username);
+            if (answers == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
 
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-
-        // 2. 사용자의 테스트 정답 조회
-        List<String> answers =  testService.getTestAnswers(user);
-
-        if (answers == null) {
+            return ResponseEntity.ok(answers);
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-
-        return ResponseEntity.ok(answers);
     }
 }
