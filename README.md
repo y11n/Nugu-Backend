@@ -51,8 +51,7 @@ https://nugu-line4.vercel.app/
 
 ### Directory Tree
 │  .DS_Store
-
-│  .gitattributes
+<br/>│  .gitattributes
 
 │  .gitignore
 
