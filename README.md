@@ -47,3 +47,98 @@ https://nugu-line4.vercel.app/
 
 ## 주요 기능
 
+## Architecture
+
+### Directory Tree
+│  .DS_Store
+│  .gitattributes
+│  .gitignore
+│  build.gradle
+│  gradlew
+│  gradlew.bat
+│  HELP.md
+│  settings.gradle
+│
+├─.github
+│  └─ISSUE_TEMPLATE
+│          github-issue-template.md
+│
+├─gradle
+│  └─wrapper
+│          gradle-wrapper.jar
+│          gradle-wrapper.properties
+│
+└─src
+    ├─main
+    │  ├─java
+    │  │  └─team8
+    │  │      └─nugu
+    │  │          │  NuguApplication.java
+    │  │          │
+    │  │          ├─common
+    │  │          │  └─converter
+    │  │          │          StringListConverter.java
+    │  │          │
+    │  │          ├─config
+    │  │          │  │  CorsMvcConfig.java
+    │  │          │  │  JsonConfig.java
+    │  │          │  │  SecurityConfig.java
+    │  │          │  │
+    │  │          │  ├─filter
+    │  │          │  │      JWTFilter.java
+    │  │          │  │      LoginFilter.java
+    │  │          │  │
+    │  │          │  └─jwt
+    │  │          │          JWTUtil.java
+    │  │          │
+    │  │          ├─controller
+    │  │          │      IntroController.java
+    │  │          │      JoinController.java
+    │  │          │      TestController.java
+    │  │          │      TestResultController.java
+    │  │          │      UserController.java
+    │  │          │
+    │  │          ├─dto
+    │  │          │      CustomUserDetails.java
+    │  │          │      IntroDTO.java
+    │  │          │      IntroResDTO.java
+    │  │          │      LoginDTO.java
+    │  │          │      NuguDTO.java
+    │  │          │      TestRequestDto.java
+    │  │          │      TestResultRequestDto.java
+    │  │          │      TestResultResponseDto.java
+    │  │          │      TestStatusResponseDto.java
+    │  │          │      UserDTO.java
+    │  │          │
+    │  │          ├─entity
+    │  │          │      Intro.java
+    │  │          │      TestEntity.java
+    │  │          │      TestResultEntity.java
+    │  │          │      Users.java
+    │  │          │
+    │  │          ├─repository
+    │  │          │      IntroRepository.java
+    │  │          │      TestRepository.java
+    │  │          │      TestResultRepository.java
+    │  │          │      UserRepository.java
+    │  │          │
+    │  │          └─service
+    │  │                  .gitkeep
+    │  │                  CustomUserDetailsService.java
+    │  │                  IntroService.java
+    │  │                  TestResultService.java
+    │  │                  TestService.java
+    │  │                  UserService.java
+    │  │
+    │  └─resources
+    │      │  application.properties
+    │      │  application.yml
+    │      │  bootsecurity.p12
+    │      │
+    │      ├─static
+    │      └─templates
+    └─test
+        └─java
+            └─team8
+                └─nugu
+                        NuguApplicationTests.java
