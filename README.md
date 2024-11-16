@@ -51,17 +51,29 @@ https://nugu-line4.vercel.app/
 
 ### Directory Tree
 │  .DS_Store
+
 │  .gitattributes
+
 │  .gitignore
+
 │  build.gradle
+
 │  gradlew
+
 │  gradlew.bat
+
 │  HELP.md
+
 │  settings.gradle
+
 │
+
 ├─.github
+
 │  └─ISSUE_TEMPLATE
+
 │          github-issue-template.md
+
 │
 ├─gradle
 │  └─wrapper
