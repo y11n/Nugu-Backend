@@ -1,7 +1,7 @@
 # 여긴 어디? 나는 누구!
-[8팀_1차-1.pdf](https://github.com/user-attachments/files/17783399/8._1.-1.pdf)
 다 함께 만들어가는 트렌디한 자기소개, 누구
----
+![image](https://github.com/user-attachments/assets/3fe1fe30-cb7a-45de-918f-1721f43870d1)
+
 ## 시작 가이드
 ---
 ### Requirements
@@ -23,20 +23,18 @@ https://nugu-line4.vercel.app/
 ## Stacks
 ---
 ### Environment
-<img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
-<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
+<img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"><img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 
 ### Framework
 <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
 
 ### Security
-<img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white">
-<img src="https://img.shields.io/badge/jsonwebtokens-6DB33F?style=for-the-badge&logo=jsonwebtokens&logoColor=white">
+<img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"><img src="https://img.shields.io/badge/jsonwebtokens-6DB33F?style=for-the-badge&logo=jsonwebtokens&logoColor=white">
 
 ### Database
 <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> 
 
-### Deployment#FF9900
+### Deployment
 <img src="https://img.shields.io/badge/amazonec2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white"> 
 
 ## 화면 구성 
