@@ -35,6 +35,22 @@ public class TestService {
         return response;
     }
 
+    // 접속자 뷰에서 사용자 테스트 생성 상태 확인
+    public TestStatusResponseDto checkTestStatusByUuid(String uuid) {
+        TestEntity test = testRepository.findByUserUuid(uuid);
+
+        TestStatusResponseDto response = new TestStatusResponseDto();
+        if (test == null) {
+            response.setHasTest(false);
+            response.setTestId(null);
+        } else {
+            response.setHasTest(true);
+            response.setTestId(test.getId());
+            response.setTotalParticipants((int) testResultRepository.countByTestId(test.getId()));
+        }
+        return response;
+    }
+
     // 사용자가 테스트 생성 했는지 확인
     public boolean hasCreatedTest(Users user) {
         return testRepository.existsByUser(user);
@@ -62,16 +78,12 @@ public class TestService {
                 .orElseThrow(() -> new IllegalArgumentException("테스트가 없습니다"));
     }
 
-    // 퀴즈 정답 조회 메서드
-    public List<String> getTestAnswers(Users user) {
-        // 1. 사용자의 테스트 조회
-        TestEntity test = testRepository.findByUser(user);
-
-        if (test == null){
-            return null;
+    // UUID로 퀴즈 정답 조회 메서드
+    public List<String> getTestAnswers(String uuid) {
+        TestEntity test = testRepository.findByUserUuid(uuid);
+        if (test == null) {
+            throw new IllegalArgumentException("해당 UUID를 가진 테스트가 없습니다: " + uuid);
         }
-
-        // 2. 테스트 정답 반환
         return test.getAnswers();
     }
 }
